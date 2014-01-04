@@ -21,11 +21,12 @@
 <h2 id ="book-rate-avg"></h2>
 
 <svg id="books-2013"></svg>
-<h2 id="book-title"> </h2>
+<h2 id="book-title"></h2>
+<img id="book-image" src=""> </img>
 
 <script> 
 var h = 500,
-    w = 550,
+    w = 500,
     margin = 15,
     cols = 10;
 
@@ -73,6 +74,7 @@ function drawYear(year) {
             })
             .on('mouseover',function(d){
                 d3.select('#book-title').text(d.title);
+                d3.select('#book-image').attr('src', d.image_url);
             })
 
     console.log(books);
