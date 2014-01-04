@@ -2,27 +2,36 @@
 <html>
 <head>
     <title>SOMETHING</title>
+    <link rel="stylesheet" href="/stylesheet.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.3.11/d3.min.js"></script>
 </head>
 
 <body>
 
-<h1 id="year-2013"> 2013 </h1>
-<h1 id="year-2012"> 2012 </h1>
-<h1 id="year-2011"> 2011 </h1>
-<h1 id="year-2010"> 2010 </h1>
-<h1 id="year-2009"> 2009 </h1>
+<ul>
+    <li><h1 id="year-2013" class="selected-year"> 2013 </h1></li>
+    <li><h1 id="year-2012"> 2012 </h1></li>
+    <li><h1 id="year-2011"> 2011 </h1></li>
+    <li><h1 id="year-2010"> 2010 </h1></li>
+    <li><h1 id="year-2009"> 2009 </h1></li>
+</ul>
 
-
-<h2 id ="book-count"></h2>
-<h2 id ="book-page-num"></h2>
-<h2 id ="book-rate-min"></h2>
-<h2 id ="book-rate-max"></h2>
-<h2 id ="book-rate-avg"></h2>
+<div class="clear"></div>
 
 <svg id="books-2013"></svg>
-<h2 id="book-title"></h2>
-<img id="book-image" src=""> </img>
+
+<div id="stats">
+    <h2 id ="book-count"></h2>
+    <h2 id ="book-page-num"></h2>
+    <h2 id ="book-rate-min"></h2>
+    <h2 id ="book-rate-max"></h2>
+    <h2 id ="book-rate-avg"></h2>
+    <div id="current">
+        <img id="book-image" src=""> </img>
+        <p id="book-title"></p>
+    </div>
+</div>
+
 
 <script> 
 var h = 500,
@@ -47,12 +56,14 @@ d3.json('books.json', function(err,data){
 })
 
 function drawYear(year) {
+    d3.selectAll('h1').attr('class', "")
+    d3.select("#year-"+year).attr('class',"selected-year");
 
-    d3.select('#book-count').text(books[year].meta.count);
-    d3.select('#book-page-num').text(books[year].meta.pages);
-    d3.select('#book-rate-min').text(books[year].meta.rating.min);
-    d3.select('#book-rate-max').text(books[year].meta.rating.max);
-    d3.select('#book-rate-avg').text(books[year].meta.rating.avg);
+    d3.select('#book-count').text("Total books: "+books[year].meta.count);
+    d3.select('#book-page-num').text("Total pages: "+books[year].meta.pages);
+    d3.select('#book-rate-min').text("Worst Rated Book (Goodreads): "+books[year].meta.rating.min);
+    d3.select('#book-rate-max').text("Best Rated Book (Goodreads): "+books[year].meta.rating.max);
+    d3.select('#book-rate-avg').text("Average Goodreads Rating: "+books[year].meta.rating.avg);
 
     var data = svg.selectAll('circle')
         .data(books[year].books, function(d,idx){

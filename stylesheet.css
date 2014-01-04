@@ -1,0 +1,43 @@
+ul{
+    list-style: none;
+}
+
+ul li{
+    float: left;
+    margin: 10px;
+}
+
+h1{
+    font-family:verdana;
+}
+
+h1:hover{
+    color:blue;
+    cursor:pointer;
+}
+
+h1.selected-year{
+    border-bottom:2px solid black;
+}
+
+h2{
+    font-family:verdana
+}
+
+p{
+    font-family:verdana
+}
+
+.clear{
+    clear:both;
+}
+
+svg{
+    margin-left: 45px;
+    float: left
+}
+
+#stats{
+    float:left;
+    margin-top: -25px;
+}
