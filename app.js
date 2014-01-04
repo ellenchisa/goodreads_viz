@@ -51,7 +51,10 @@ function getbooks(year){
         books[year].meta.count = books[year].books.length;
         books[year].meta.rating.avg /= books[year].meta.count;
 
-        fs.appendFileSync("books.json", JSON.stringify(books));
+        console.log(year)
+        console.log(books[year].meta);
+
+        fs.writeFileSync("books.json", JSON.stringify(books));
     });
 };
 
