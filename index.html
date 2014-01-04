@@ -8,7 +8,11 @@
 <body>
 
 <h1> 2013 </h1>
-<h2> books[year].meta.count </h2>
+<h2 id ="book-count"></h2>
+<h2 id ="book-page-num"></h2>
+<h2 id ="book-rate-min"></h2>
+<h2 id ="book-rate-max"></h2>
+<h2 id ="book-rate-avg"></h2>
 <svg id="books-2013"></svg>
 <h2 id="book-title"> </h2>
 
@@ -28,6 +32,12 @@ var y = d3.scale.linear().domain([0,12]).range([margin, h - margin])
 var color = d3.scale.linear().domain([0, 233, 467, 700]).range(['gray','blue','yellow','red'])
 
 d3.json('books.json', function(err,books){
+    d3.select('#book-count').text(books[2013].meta.count);
+    d3.select('#book-page-num').text(books[2013].meta.pages);
+    d3.select('#book-rate-min').text(books[2013].meta.rating.min);
+    d3.select('#book-rate-max').text(books[2013].meta.rating.max);
+    d3.select('#book-rate-avg').text(books[2013].meta.rating.avg);
+
     books=books[2013].books;
     svg.selectAll('circle')
         .data(books)
