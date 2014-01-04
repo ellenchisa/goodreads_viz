@@ -24,6 +24,7 @@ var svg = d3.select('#books-2013')
 //Scale
 var x = d3.scale.linear().domain([0,cols]).range([margin, w - margin])
 var y = d3.scale.linear().domain([0,12]).range([margin, h - margin])
+var color = d3.scale.linear().domain([0, 233, 467, 700]).range(['gray','blue','yellow','red'])
 
 d3.json('books.json', function(err,books){
     books=books[2013].books;
@@ -38,22 +39,9 @@ d3.json('books.json', function(err,books){
             .attr('cy', function(d,idx){
                 return y(Math.floor(idx / cols));
             })
-            .attr('style', function(d){
-                if (d.num_pages > 600){
-                    return "fill:red"
-                } else if (d.num_pages > 500 && d.num_pages < 600){
-                    return "fill:orange"
-                } else if (d.num_pages > 400 && d.num_pages < 500){
-                    return "fill:yellow"
-                } else if (d.num_pages > 300 && d.num_pages < 400){
-                    return "fill:green"
-                } else if (d.num_pages > 200 && d.num_pages < 300){
-                    return "fill:blue"
-                } else if (d.num_pages > 100 && d.num_pages < 200){
-                    return "fill:purple"
-                } else {
-                    return "fill:black"
-                }
+            .attr('fill', function(d){
+                return color(d.num_pages);
+
             })
             .on('mouseover',function(d){
                 console.log(d);
