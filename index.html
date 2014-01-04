@@ -10,6 +10,7 @@
 <h1> 2013 </h1>
 <h2> books[year].meta.count </h2>
 <svg id="books-2013"></svg>
+<h2 id="book-title"> </h2>
 
 <script> 
 var h = 500,
@@ -44,7 +45,7 @@ d3.json('books.json', function(err,books){
 
             })
             .on('mouseover',function(d){
-                console.log(d);
+                d3.select('#book-title').text(d.title);
             })
 
     console.log(books);
