@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SOMETHING</title>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.3.11/d3.min.js"></script>
+</head>
+
+<body>
+
+<h1> 2013 </h1>
+<h2> books[year].meta.count </h2>
+<svg id="books-2013"></svg>
+
+<script> 
+var h = 500,
+    w = 550,
+    margin = 15,
+    cols = 10;
+
+var svg = d3.select('#books-2013')
+    .attr('height', h)
+    .attr('width', w);
+
+//Scale
+var x = d3.scale.linear().domain([0,cols]).range([margin, w - margin])
+var y = d3.scale.linear().domain([0,12]).range([margin, h - margin])
+
+d3.json('books.json', function(err,books){
+    books=books[2013].books;
+    svg.selectAll('circle')
+        .data(books)
+        .enter() //any new datapoint
+        .append('circle')
+            .attr('r', 10)
+            .attr('cx', function(d, idx){ //d is a book (special coloring would go here), idx is the index
+                return x(idx % cols);
+            })
+            .attr('cy', function(d,idx){
+                return y(Math.floor(idx / cols));
+            })
+            .attr('style', function(d){
+                if (d.num_pages > 600){
+                    return "fill:red"
+                } else if (d.num_pages > 500 && d.num_pages < 600){
+                    return "fill:orange"
+                } else if (d.num_pages > 400 && d.num_pages < 500){
+                    return "fill:yellow"
+                } else if (d.num_pages > 300 && d.num_pages < 400){
+                    return "fill:green"
+                } else if (d.num_pages > 200 && d.num_pages < 300){
+                    return "fill:blue"
+                } else if (d.num_pages > 100 && d.num_pages < 200){
+                    return "fill:purple"
+                } else {
+                    return "fill:black"
+                }
+            })
+            .on('mouseover',function(d){
+                console.log(d);
+            })
+
+    console.log(books);
+})
+</script>
+
+</body>
+</html>
