@@ -7,12 +7,19 @@
 
 <body>
 
-<h1> 2013 </h1>
+<h1 id="year-2013"> 2013 </h1>
+<h1 id="year-2012"> 2012 </h1>
+<h1 id="year-2011"> 2011 </h1>
+<h1 id="year-2010"> 2010 </h1>
+<h1 id="year-2009"> 2009 </h1>
+
+
 <h2 id ="book-count"></h2>
 <h2 id ="book-page-num"></h2>
 <h2 id ="book-rate-min"></h2>
 <h2 id ="book-rate-max"></h2>
 <h2 id ="book-rate-avg"></h2>
+
 <svg id="books-2013"></svg>
 <h2 id="book-title"> </h2>
 
@@ -27,21 +34,31 @@ var svg = d3.select('#books-2013')
     .attr('width', w);
 
 //Scale
-var x = d3.scale.linear().domain([0,cols]).range([margin, w - margin])
-var y = d3.scale.linear().domain([0,12]).range([margin, h - margin])
-var color = d3.scale.linear().domain([0, 233, 467, 700]).range(['gray','blue','yellow','red'])
+var x = d3.scale.linear().domain([0,cols]).range([margin, w - margin]);
+var y = d3.scale.linear().domain([0,12]).range([margin, h - margin]);
+var color = d3.scale.linear().domain([0, 233, 467, 700]).range(['gray','blue','yellow','red']);
 
-d3.json('books.json', function(err,books){
-    d3.select('#book-count').text(books[2013].meta.count);
-    d3.select('#book-page-num').text(books[2013].meta.pages);
-    d3.select('#book-rate-min').text(books[2013].meta.rating.min);
-    d3.select('#book-rate-max').text(books[2013].meta.rating.max);
-    d3.select('#book-rate-avg').text(books[2013].meta.rating.avg);
+var books = null;
 
-    books=books[2013].books;
-    svg.selectAll('circle')
-        .data(books)
-        .enter() //any new datapoint
+d3.json('books.json', function(err,data){
+    books=data;
+    drawYear(2013);
+})
+
+function drawYear(year) {
+
+    d3.select('#book-count').text(books[year].meta.count);
+    d3.select('#book-page-num').text(books[year].meta.pages);
+    d3.select('#book-rate-min').text(books[year].meta.rating.min);
+    d3.select('#book-rate-max').text(books[year].meta.rating.max);
+    d3.select('#book-rate-avg').text(books[year].meta.rating.avg);
+
+    var data = svg.selectAll('circle')
+        .data(books[year].books, function(d,idx){
+            return d.title + "-" + d.year;
+        });
+        data.exit().remove()
+        data.enter()//any new datapoint
         .append('circle')
             .attr('r', 10)
             .attr('cx', function(d, idx){ //d is a book (special coloring would go here), idx is the index
@@ -59,8 +76,14 @@ d3.json('books.json', function(err,books){
             })
 
     console.log(books);
-})
-</script>
+}
 
+d3.select('#year-2013').on('click',function(){ drawYear(2013); });
+d3.select('#year-2012').on('click',function(){ drawYear(2012); });
+d3.select('#year-2011').on('click',function(){ drawYear(2011); });
+d3.select('#year-2010').on('click',function(){ drawYear(2010); });
+d3.select('#year-2009').on('click',function(){ drawYear(2009); });
+
+</script>
 </body>
 </html>
