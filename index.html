@@ -29,6 +29,8 @@
     <div id="current">
         <img id="book-image" src=""> </img>
         <p id="book-title"></p>
+        <p id="book-author"></p>
+        <p id="book-num_pages"></p>
     </div>
 </div>
 
@@ -86,6 +88,8 @@ function drawYear(year) {
             .on('mouseover',function(d){
                 d3.select('#book-title').text(d.title);
                 d3.select('#book-image').attr('src', d.image_url);
+                d3.select('#book-author').text("by " + d.author);
+                d3.select('#book-num_pages').text(d.num_pages + " pages");
                 d3.select(this).attr('fill', 'red');
             })
 
