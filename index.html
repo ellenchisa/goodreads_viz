@@ -86,7 +86,13 @@ function drawYear(year) {
             .on('mouseover',function(d){
                 d3.select('#book-title').text(d.title);
                 d3.select('#book-image').attr('src', d.image_url);
+                d3.select(this).attr('fill', 'red');
             })
+
+            .on('mouseout', function(d){
+                d3.select(this).attr('fill', color(d.num_pages));
+            });
+
 
     console.log(books);
 }
