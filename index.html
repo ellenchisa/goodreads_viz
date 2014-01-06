@@ -9,6 +9,7 @@
 <body>
 
 <ul>
+    <li><h1 id="year-all"> ALL </h1></li>
     <li><h1 id="year-2013" class="selected-year"> 2013 </h1></li>
     <li><h1 id="year-2012"> 2012 </h1></li>
     <li><h1 id="year-2011"> 2011 </h1></li>
@@ -54,21 +55,21 @@ var books = null;
 
 d3.json('books.json', function(err,data){
     books=data;
-    drawYear(2013);
+    drawYear(2013,books[2013]);
 })
 
-function drawYear(year) {
+function drawYear(year, data) {
     d3.selectAll('h1').attr('class', "")
     d3.select("#year-"+year).attr('class',"selected-year");
 
-    d3.select('#book-count').text("Total books: "+books[year].meta.count);
-    d3.select('#book-page-num').text("Total pages: "+books[year].meta.pages);
-    d3.select('#book-rate-min').text("Worst Rated Book (Goodreads): "+books[year].meta.rating.min);
-    d3.select('#book-rate-max').text("Best Rated Book (Goodreads): "+books[year].meta.rating.max);
-    d3.select('#book-rate-avg').text("Average Goodreads Rating: "+books[year].meta.rating.avg);
+    d3.select('#book-count').text("Total books: "+data.meta.count);
+    d3.select('#book-page-num').text("Total pages: "+data.meta.pages);
+    d3.select('#book-rate-min').text("Worst Rated Book (Goodreads): "+data.meta.rating.min);
+    d3.select('#book-rate-max').text("Best Rated Book (Goodreads): "+data.meta.rating.max);
+    d3.select('#book-rate-avg').text("Average Goodreads Rating: "+data.meta.rating.avg);
 
     var data = svg.selectAll('circle')
-        .data(books[year].books, function(d,idx){
+        .data(data.books, function(d,idx){
             return d.title + "-" + d.year;
         });
         data.exit().remove()
@@ -101,11 +102,40 @@ function drawYear(year) {
     console.log(books);
 }
 
-d3.select('#year-2013').on('click',function(){ drawYear(2013); });
-d3.select('#year-2012').on('click',function(){ drawYear(2012); });
-d3.select('#year-2011').on('click',function(){ drawYear(2011); });
-d3.select('#year-2010').on('click',function(){ drawYear(2010); });
-d3.select('#year-2009').on('click',function(){ drawYear(2009); });
+
+d3.select('#year-all').on('click',function(){
+    if (!books['all']){
+        books['all'] = {
+            meta: {
+                count: 0,
+                pages: 0,
+                rating: {
+                    min: null,
+                    avg: 0,
+                    max: null,
+                }
+            },
+            books: []
+        };
+
+        [2009,2010,2011,2012,2013] .forEach(function(year){
+            books.all.meta.pages += books[year].meta.pages
+            books.all.meta.count += books[year].meta.count
+            books.all.books = books.all.books.concat(books[year].books)
+        })
+        
+
+
+    }
+    drawYear('all', books['all'])
+
+})
+
+d3.select('#year-2013').on('click',function(){ drawYear(2013,books[2013]); });
+d3.select('#year-2012').on('click',function(){ drawYear(2012,books[2012]); });
+d3.select('#year-2011').on('click',function(){ drawYear(2011,books[2011]); });
+d3.select('#year-2010').on('click',function(){ drawYear(2010,books[2010]); });
+d3.select('#year-2009').on('click',function(){ drawYear(2009,books[2009]); });
 
 </script>
 </body>
