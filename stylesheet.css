@@ -1,9 +1,10 @@
 ul{
     list-style: none;
+    width:180px;
+    margin: 0 0 0 0;
 }
 
 ul li{
-    float: left;
     margin: 10px;
 }
 
@@ -17,7 +18,7 @@ h1:hover{
 }
 
 h1.selected-year{
-    border-bottom:2px solid black;
+    color:#7D1717;
 }
 
 h2{
@@ -34,10 +35,22 @@ p{
 
 svg{
     margin-left: 45px;
-    float: left
+    float: left;
+    margin-top:20px;
+}
+
+#navigation{
+    float:left;
+    margin: 10px;
 }
 
 #stats{
     float:left;
     margin-top: -25px;
+}
+
+#current{
+    margin-top:20px;
+    width:400px;
+    float:left;
 }

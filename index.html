@@ -8,33 +8,35 @@
 
 <body>
 
-<ul>
-    <li><h1 id="year-all"> ALL </h1></li>
-    <li><h1 id="year-2013" class="selected-year"> 2013 </h1></li>
-    <li><h1 id="year-2012"> 2012 </h1></li>
-    <li><h1 id="year-2011"> 2011 </h1></li>
-    <li><h1 id="year-2010"> 2010 </h1></li>
-    <li><h1 id="year-2009"> 2009 </h1></li>
-</ul>
-
-<div class="clear"></div>
+<div id="navigation">
+    <ul>
+        <li><h1 id="year-all"> All Time </h1></li>
+        <li><h1 id="year-2013" class="selected-year"> 2013 </h1></li>
+        <li><h1 id="year-2012"> 2012 </h1></li>
+        <li><h1 id="year-2011"> 2011 </h1></li>
+        <li><h1 id="year-2010"> 2010 </h1></li>
+        <li><h1 id="year-2009"> 2009 </h1></li>
+    </ul>
+</div>
 
 <svg id="books-2013"></svg>
 
-<div id="stats">
-    <h2 id ="book-count"></h2>
-    <h2 id ="book-page-num"></h2>
-    <h2 id ="book-rate-min"></h2>
-    <h2 id ="book-rate-max"></h2>
-    <h2 id ="book-rate-avg"></h2>
-    <div id="current">
-        <img id="book-image" src=""> </img>
-        <p id="book-title"></p>
-        <p id="book-author"></p>
-        <p id="book-num_pages"></p>
-    </div>
+<div id="current">
+    <img id="book-image" src=""> </img>
+    <p id="book-title"></p>
+    <p id="book-author"></p>
+    <p id="book-num_pages"></p>
 </div>
 
+<div class="clear"></div>
+
+<div id="stats">
+    <p id ="book-count"></p>
+    <p id ="book-page-num"></p>
+    <p id ="book-rate-min"></p>
+    <p id ="book-rate-max"></p>
+    <p id ="book-rate-avg"></p>
+</div>
 
 <script> 
 var h = 500,
@@ -62,11 +64,11 @@ function drawYear(year, data) {
     d3.selectAll('h1').attr('class', "")
     d3.select("#year-"+year).attr('class',"selected-year");
 
-    d3.select('#book-count').text("Total books: "+data.meta.count);
-    d3.select('#book-page-num').text("Total pages: "+data.meta.pages);
-    d3.select('#book-rate-min').text("Worst Rated Book (Goodreads): "+data.meta.rating.min);
-    d3.select('#book-rate-max').text("Best Rated Book (Goodreads): "+data.meta.rating.max);
-    d3.select('#book-rate-avg').text("Average Goodreads Rating: "+data.meta.rating.avg);
+    d3.select('#book-count').text("In "+ year + " I read " +data.meta.count + " books.");
+    d3.select('#book-page-num').text("Totalling "+ data.meta.pages + " pages.");
+    d3.select('#book-rate-min').text("The worst rated book I read (according to Goodreads) was rated: "+data.meta.rating.min);
+    d3.select('#book-rate-max').text("The best rated book I read (according to Goodreads) was rated: "+data.meta.rating.max);
+    d3.select('#book-rate-avg').text("The average Goodreads rating of all the books I read last year was: "+data.meta.rating.avg);
 
     var data = svg.selectAll('circle')
         .data(data.books, function(d,idx){
@@ -95,6 +97,10 @@ function drawYear(year, data) {
             })
 
             .on('mouseout', function(d){
+                d3.select('#book-title').text('');
+                d3.select('#book-image').attr('src','');
+                d3.select('#book-author').text('');
+                d3.select('#book-num_pages').text('');
                 d3.select(this).attr('fill', color(d.num_pages));
             });
 
