@@ -19,7 +19,7 @@ function getbooks(year){
     };
     //console.log(JSON.stringify(books));
 
-    client.getSingleShelf('1952043', year+'&per_page=120', function(reading_shelf) {
+    client.getSingleShelf('1952043', year+'&per_page=200', function(reading_shelf) {
         reading_shelf.GoodreadsResponse.books[0].book.forEach(function(book) {
             books[year].books.push({
                 year: year,
@@ -63,6 +63,8 @@ getbooks(2010);
 getbooks(2011);
 getbooks(2012);
 getbooks(2013);
+getbooks('fiction');
+getbooks('nonfiction');
 
 
 

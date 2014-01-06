@@ -16,6 +16,8 @@
         <li><h1 id="year-2011"> 2011 </h1></li>
         <li><h1 id="year-2010"> 2010 </h1></li>
         <li><h1 id="year-2009"> 2009 </h1></li>
+        <li><h1 id="fiction"> Fiction </h1></li>
+        <li><h1 id="non-fiction"> Non-fiction </h1></li>
     </ul>
 </div>
 
@@ -94,6 +96,7 @@ function drawYear(year, data) {
                 d3.select('#book-author').text("by " + d.author);
                 d3.select('#book-num_pages').text(d.num_pages + " pages");
                 d3.select(this).attr('fill', 'red');
+                d3.select(this).attr('href', d.link);
             })
 
             .on('mouseout', function(d){
@@ -142,6 +145,8 @@ d3.select('#year-2012').on('click',function(){ drawYear(2012,books[2012]); });
 d3.select('#year-2011').on('click',function(){ drawYear(2011,books[2011]); });
 d3.select('#year-2010').on('click',function(){ drawYear(2010,books[2010]); });
 d3.select('#year-2009').on('click',function(){ drawYear(2009,books[2009]); });
+d3.select('#fiction').on('click',function(){ drawYear('fiction',books['fiction']); });
+d3.select('#non-fiction').on('click',function(){ drawYear('nonfiction',books['nonfiction']); });
 
 </script>
 </body>
