@@ -10,14 +10,16 @@
 
 <div id="navigation">
     <ul>
-        <li><h1 id="year-all"> All Time </h1></li>
+        <li><h1 id="year-all"> All </h1></li>
         <li><h1 id="year-2013" class="selected-year"> 2013 </h1></li>
         <li><h1 id="year-2012"> 2012 </h1></li>
         <li><h1 id="year-2011"> 2011 </h1></li>
         <li><h1 id="year-2010"> 2010 </h1></li>
         <li><h1 id="year-2009"> 2009 </h1></li>
+        <li><h1 id="year-2008"> 2008 </h1></li>
+        <li><h1 id="year-pre-2008"> pre-2008 </h1></li>
         <li><h1 id="fiction"> Fiction </h1></li>
-        <li><h1 id="non-fiction"> Non-fiction </h1></li>
+        <li><h1 id="non-fiction"> Nonfiction </h1></li>
     </ul>
 </div>
 
@@ -145,6 +147,8 @@ d3.select('#year-2012').on('click',function(){ drawYear(2012,books[2012]); });
 d3.select('#year-2011').on('click',function(){ drawYear(2011,books[2011]); });
 d3.select('#year-2010').on('click',function(){ drawYear(2010,books[2010]); });
 d3.select('#year-2009').on('click',function(){ drawYear(2009,books[2009]); });
+d3.select('#year-2008').on('click',function(){ drawYear(2008,books[2008]); });
+d3.select('#year-pre-2008').on('click',function(){ drawYear('pre-2008',books['pre-2008']); });
 d3.select('#fiction').on('click',function(){ drawYear('fiction',books['fiction']); });
 d3.select('#non-fiction').on('click',function(){ drawYear('nonfiction',books['nonfiction']); });
 
