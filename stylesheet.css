@@ -1,6 +1,6 @@
 ul{
     list-style: none;
-    width:220px;
+    width:250px;
     margin: 0 0 0 0;
 }
 
@@ -10,6 +10,7 @@ ul li{
 
 h1{
     font-family:verdana;
+    font-size:18pt;
 }
 
 h1:hover{

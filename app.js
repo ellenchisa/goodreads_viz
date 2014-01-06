@@ -67,7 +67,8 @@ getbooks('fiction');
 getbooks('nonfiction');
 getbooks(2008);
 getbooks('pre-2008');
-
+getbooks('female_author');
+getbooks('male_author');
 
 
 // projects.forEach(function(project) {

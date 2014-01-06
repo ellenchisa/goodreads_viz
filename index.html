@@ -20,6 +20,8 @@
         <li><h1 id="year-pre-2008"> pre-2008 </h1></li>
         <li><h1 id="fiction"> Fiction </h1></li>
         <li><h1 id="non-fiction"> Nonfiction </h1></li>
+        <li><h1 id="female-author">Female Author</h1></li>
+        <li><h1 id="male-author">Male Author</h1></li>
     </ul>
 </div>
 
@@ -151,6 +153,8 @@ d3.select('#year-2008').on('click',function(){ drawYear(2008,books[2008]); });
 d3.select('#year-pre-2008').on('click',function(){ drawYear('pre-2008',books['pre-2008']); });
 d3.select('#fiction').on('click',function(){ drawYear('fiction',books['fiction']); });
 d3.select('#non-fiction').on('click',function(){ drawYear('nonfiction',books['nonfiction']); });
+d3.select('#female-author').on('click',function(){ drawYear('female_author',books['female_author']); });
+d3.select('#male-author').on('click',function(){ drawYear('male_author',books['male_author']); });
 
 </script>
 </body>
