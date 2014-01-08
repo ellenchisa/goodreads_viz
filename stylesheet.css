@@ -40,6 +40,10 @@ svg{
     margin-top:20px;
 }
 
+circle{
+    cursor:pointer;
+}
+
 #navigation{
     float:left;
     margin: 10px;

@@ -45,7 +45,7 @@
 </div>
 
 <script> 
-var h = 500,
+var h = 1000,
     w = 500,
     margin = 15,
     cols = 10;
@@ -56,7 +56,7 @@ var svg = d3.select('#books-2013')
 
 //Scale
 var x = d3.scale.linear().domain([0,cols]).range([margin, w - margin]);
-var y = d3.scale.linear().domain([0,12]).range([margin, h - margin]);
+var y = d3.scale.linear().domain([0,20]).range([margin, h - margin]);
 var color = d3.scale.linear().domain([0, 700]).range(['#FFB6C1','#7D1717']);
 
 var books = null;
@@ -109,6 +109,10 @@ function drawYear(year, data) {
                 d3.select('#book-author').text('');
                 d3.select('#book-num_pages').text('');
                 d3.select(this).attr('fill', color(d.num_pages));
+            })
+
+            .on('click', function(d){
+                window.location=d.link;
             });
 
 
