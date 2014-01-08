@@ -100,7 +100,7 @@ function drawYear(year, data) {
                 d3.select('#book-author').text("by " + d.author);
                 d3.select('#book-num_pages').text(d.num_pages + " pages");
                 d3.select(this).attr('fill', 'red');
-                d3.select(this).attr('href', d.link);
+                
             })
 
             .on('mouseout', function(d){
