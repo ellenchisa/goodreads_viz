@@ -47,6 +47,7 @@ circle{
 #navigation{
     float:left;
     margin: 10px;
+    width: 270px;
 }
 
 #stats{

@@ -32,17 +32,17 @@
     <p id="book-title"></p>
     <p id="book-author"></p>
     <p id="book-num_pages"></p>
+    <div id="stats">
+        <p id ="book-count"></p>
+        <p id ="book-page-num"></p>
+        <p id ="book-rate-min"></p>
+        <p id ="book-rate-max"></p>
+        <p id ="book-rate-avg"></p>
+</div>
 </div>
 
 <div class="clear"></div>
 
-<div id="stats">
-    <p id ="book-count"></p>
-    <p id ="book-page-num"></p>
-    <p id ="book-rate-min"></p>
-    <p id ="book-rate-max"></p>
-    <p id ="book-rate-avg"></p>
-</div>
 
 <script> 
 var h = 1000,
@@ -80,6 +80,7 @@ function drawYear(year, data) {
         .data(data.books, function(d,idx){
             return d.title + "-" + d.year;
         });
+        
         data.exit().remove()
         data.enter()//any new datapoint
         .append('circle')
@@ -114,7 +115,6 @@ function drawYear(year, data) {
             .on('click', function(d){
                 window.location=d.link;
             });
-
 
     console.log(books);
 }
