@@ -3,23 +3,26 @@ var fs = require('fs');
 var books = {};
 var client = new goodreads.client({ 'key': 'auaYzVO0q5dYrIly7e9w', 'secret': 'UvPhnsJoOzfGeVC0cdD1pfELxfr6gxSn4LiKTfY'});
 
-function getbooks(year){
-    books[year] = {
-        meta: {
-            count: 0,
-            pages: 0,
-            rating: {
-                min: null,
-                avg: 0,
-                max: null,
-            }
-        },
-        
-        books: []
-    };
+function getbooks(year,page){
+    page=page || 1;
+    if (!books[year]) { 
+        books[year] = {
+            meta: {
+                count: 0,
+                pages: 0,
+                rating: {
+                    min: null,
+                    avg: 0,
+                    max: null,
+                }
+            },
+            books: []
+        };
+    }
+
     //console.log(JSON.stringify(books));
 
-    client.getSingleShelf('1952043', year+'&per_page=200', function(reading_shelf) {
+    client.getSingleShelf('1952043', year+'&per_page=200&page='+page, function(reading_shelf) {
         reading_shelf.GoodreadsResponse.books[0].book.forEach(function(book) {
             books[year].books.push({
                 year: year,
@@ -43,20 +46,36 @@ function getbooks(year){
             if(!books[year].meta.rating.min || +book.average_rating[0] < books[year].meta.rating.min){
                 books[year].meta.rating.min = +book.average_rating[0]
             }
-                
-
-
         });
 
-        books[year].meta.count = books[year].books.length;
-        books[year].meta.rating.avg /= books[year].meta.count;
+        if (reading_shelf.GoodreadsResponse.books[0].book.length === 200){
+            console.log('getting new books for', page+1)
+            getbooks(year,page+1);
+        } else {
+            books[year].meta.count = books[year].books.length;
+            books[year].meta.rating.avg /= books[year].meta.count;
 
-        console.log(year)
-        console.log(books[year].meta);
+            console.log(year)
+            console.log(books[year].meta);
 
-        fs.writeFileSync("books.json", JSON.stringify(books));
+            joinbooks()
+
+            fs.writeFileSync("books.json", JSON.stringify(books));
+        }        
     });
 };
+
+var outstanding = 11;
+
+function joinbooks() {
+    outstanding -= 1
+    if (outstanding === 0) {
+        console.log('gotallbooks')
+    } else {
+        console.log('still waiting')
+    }
+}
+
 
 getbooks(2009);
 getbooks(2010);
