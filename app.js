@@ -54,6 +54,7 @@ function getbooks(year,page){
         } else {
             books[year].meta.count = books[year].books.length;
             books[year].meta.rating.avg /= books[year].meta.count;
+            books[year].meta.rating.avg = Math.floor(books[year].meta.rating.avg * 100) / 100;
 
             console.log(year)
             console.log(books[year].meta);

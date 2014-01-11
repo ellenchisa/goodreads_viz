@@ -28,12 +28,14 @@
 <svg id="books-2013"></svg>
 
 <div id="current">
+    <svg id="scale"></svg>
+    <p> The darker a circle is, the longer the book is.</p>
     <img id="book-image" src=""> </img>
     <p id="book-title"></p>
     <p id="book-author"></p>
     <p id="book-num_pages"></p>
     <div id="stats">
-        <p id ="book-count"></p>
+        <p>This set has <span id="book-count"></span> books, totalling <span id="book-page-num"></span> pages. The average Goodreads rating for the set is <span id="book-rate-avg"></span>. The highest rating is <span id="book-rate-max"></span> and the lowest is <span id="book-rate-min"></span>.</p>
         <p id ="book-page-num"></p>
         <p id ="book-rate-min"></p>
         <p id ="book-rate-max"></p>
@@ -54,35 +56,64 @@ var svg = d3.select('#books-2013')
     .attr('height', h)
     .attr('width', w);
 
+var svg2 = d3.select('#scale')
+    .attr('height', 20)
+    .attr('width', 400)
+
 //Scale
 var x = d3.scale.linear().domain([0,cols]).range([margin, w - margin]);
 var y = d3.scale.linear().domain([0,40]).range([margin, h - margin]);
 var color = d3.scale.linear().domain([0, 700]).range(['#FFB6C1','#7D1717']);
 
+var gradient = svg2.append("svg:defs")
+  .append("svg:linearGradient")
+    .attr("id", "gradient")
+    .attr("x1", "0%")
+    // .attr("y1", "0%")
+    .attr("x2", "100%")
+    // .attr("y2", "0%")
+    .attr("spreadMethod", "pad");
+
+gradient.append("svg:stop")
+    .attr("offset", "0%")
+    .attr("stop-color", "#FFB6C1")
+    .attr("stop-opacity", 1);
+
+gradient.append("svg:stop")
+    .attr("offset", "100%")
+    .attr("stop-color", "#7D1717")
+    .attr("stop-opacity", 1);
+
+svg2.append('rect')
+    .attr('width',450)
+    .attr('height', 20)
+    .style("fill", "url(#gradient)");
+
 var books = null;
 
 d3.json('books.json', function(err,data){
     books=data;
-    drawYear(2013,books[2013]);
+    drawYear(2013,
+        books[2013]);
 })
 
 function drawYear(year, data) {
     d3.selectAll('h1').attr('class', "")
     d3.select("#year-"+year).attr('class',"selected-year");
 
-    d3.select('#book-count').text("This set has " +data.meta.count + " books.");
-    d3.select('#book-page-num').text("Totalling "+ data.meta.pages + " pages.");
-    d3.select('#book-rate-min').text("The worst of these was rated: "+data.meta.rating.min);
-    d3.select('#book-rate-max').text("The best of these was rated: "+data.meta.rating.max);
-    d3.select('#book-rate-avg').text("The average Goodreads rating for all of these books is: "+data.meta.rating.avg);
+    d3.select('#book-count').text(data.meta.count);
+    d3.select('#book-page-num').text(data.meta.pages);
+    d3.select('#book-rate-min').text(data.meta.rating.min);
+    d3.select('#book-rate-max').text(data.meta.rating.max);
+    d3.select('#book-rate-avg').text(data.meta.rating.avg);
 
-    var data = svg.selectAll('circle')
+    var circles = svg.selectAll('circle')
         .data(data.books, function(d,idx){
             return d.title + "-" + d.year;
         });
         
-        data.exit().remove()
-        data.enter()//any new datapoint
+        circles.exit().remove()
+        circles.enter()//any new datapoint
 
         .append('circle')
             .attr('r', 10)
@@ -102,12 +133,7 @@ function drawYear(year, data) {
                 d3.select('#book-author').text("by " + d.author);
                 d3.select('#book-num_pages').text(d.num_pages + " pages");
                 d3.select(this).attr('fill', 'red');
-                d3.select('#book-count').text("");
-                d3.select('#book-page-num').text("");
-                d3.select('#book-rate-min').text("");
-                d3.select('#book-rate-max').text("");
-                d3.select('#book-rate-avg').text("");
-                
+                d3.select('#stats').style('display','none');
             })
 
             .on('mouseout', function(d){
@@ -116,11 +142,7 @@ function drawYear(year, data) {
                 d3.select('#book-author').text('');
                 d3.select('#book-num_pages').text('');
                 d3.select(this).attr('fill', color(d.num_pages));
-                d3.select('#book-count').text("This set has " +data.meta.count + " books.");
-                d3.select('#book-page-num').text("Totalling "+ data.meta.pages + " pages.");
-                d3.select('#book-rate-min').text("The worst of these was rated: "+data.meta.rating.min);
-                d3.select('#book-rate-max').text("The best of these was rated: "+data.meta.rating.max);
-                d3.select('#book-rate-avg').text("The average Goodreads rating for all of these books is: "+data.meta.rating.avg);
+                d3.select('#stats').style('display','block');
             })
 
             .on('click', function(d){

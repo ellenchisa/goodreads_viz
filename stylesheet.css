@@ -34,10 +34,15 @@ p{
     clear:both;
 }
 
-svg{
+#books-2013{
     margin-left: 45px;
     float: left;
     margin-top:20px;
+}
+
+#scale{
+    margin-left:none;
+    margin-top:0px;
 }
 
 circle{
