@@ -26,7 +26,8 @@
 <div id="navigation">
     <ul>
         <li><h1 id="year-all"> All </h1></li>
-        <li><h1 id="year-2014" class="selected-year"> 2014 </h1></li>
+        <li><h1 id="year-2015" class="selected-year"> 2015 </h1></li>
+        <li><h1 id="year-2014"> 2014 </h1></li>
         <li><h1 id="year-2013"> 2013 </h1></li>
         <li><h1 id="year-2012"> 2012 </h1></li>
         <li><h1 id="year-2011"> 2011 </h1></li>
@@ -109,8 +110,8 @@ var books = null;
 
 d3.json('books.json', function(err,data){
     books=data;
-    drawYear(2014,
-        books[2014]);
+    drawYear(2015,
+        books[2015]);
 })
 
 function drawYear(year, data) {
@@ -184,7 +185,7 @@ d3.select('#year-all').on('click',function(){
             books: []
         };
 
-        [2009,2010,2011,2012,2013,2014] .forEach(function(year){
+        [2009,2010,2011,2012,2013,2014,2015] .forEach(function(year){
             books.all.meta.pages += books[year].meta.pages
             books.all.meta.count += books[year].meta.count
             books.all.books = books.all.books.concat(books[year].books)
@@ -197,6 +198,7 @@ d3.select('#year-all').on('click',function(){
 
 })
 
+d3.select('#year-2015').on('click',function(){ drawYear(2015,books[2015]); });
 d3.select('#year-2014').on('click',function(){ drawYear(2014,books[2014]); });
 d3.select('#year-2013').on('click',function(){ drawYear(2013,books[2013]); });
 d3.select('#year-2012').on('click',function(){ drawYear(2012,books[2012]); });
